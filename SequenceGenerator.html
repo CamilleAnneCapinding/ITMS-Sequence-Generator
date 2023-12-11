@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequence Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #538E55; 
+            color: white; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: white; 
+            background-color: #004400; 
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        label, select, input, button, p {
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        label {
+            color: white; 
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select, input, button {
+            padding: 10px;
+            border: 1px solid white; 
+            border-radius: 5px;
+        }
+
+        select, button {
+            background-color: #004400; 
+            color: white; 
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #006600; 
+        }
+
+        #sequenceOutput {
+            color: white; 
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+       
+        @media screen and (min-width: 600px) {
+            label, select, input, button {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Sequence Generator</h1>
+    <label for="sequenceType">Choose a sequence type:</label>
+    <select id="sequenceType">
+        <option value="1">Fibonacci</option>
+        <option value="2">Tribonacci</option>
+        <option value="3">Lucas</option>
+    </select>
+    <br>
+    <label for="sequenceLength">Enter the length of the sequence:</label>
+    <input type="number" id="sequenceLength" min="1" value="1">
+    <br>
+    <button onclick="generateSequence()">Generate Sequence</button>
+    <div id="sequenceOutput"></div>
+
+    <script>
+        "use strict";
+
+        function generateSequence() {
+            const sequenceType = document.getElementById("sequenceType").value;
+            const sequenceLength = parseInt(document.getElementById("sequenceLength").value);
+
+            if (isNaN(sequenceLength) || sequenceLength < 1) {
+                alert("Please enter a valid positive integer for sequence length.");
+                return;
+            }
+
+            const sequenceOutput = document.getElementById("sequenceOutput");
+            sequenceOutput.innerHTML = "The sequence is:<br>";
+
+            for (let i = 0; i < sequenceLength; ++i) {
+                switch (parseInt(sequenceType)) {
+                    case 1:
+                        sequenceOutput.innerHTML += `${i + 1}.) ${fibonacci(i)}`;
+                        break;
+                    case 2:
+                        sequenceOutput.innerHTML += `${i + 1}.) ${tribonacci(i)}`;
+                        break;
+                    case 3:
+                        sequenceOutput.innerHTML += `${i + 1}.) ${lucas(i)}`;
+                        break;
+                }
+
+                if (i < sequenceLength - 1) {
+                    sequenceOutput.innerHTML += " _ ";
+                }
+            }
+        }
+
+        function fibonacci(n) {
+            if (n <= 1) {
+                return n;
+            }
+            return fibonacci(n - 1) + fibonacci(n - 2);
+        }
+
+        function tribonacci(n) {
+            if (n === 0) {
+                return 0;
+            }
+            if (n === 1 || n === 2) {
+                return 1;
+            }
+            return tribonacci(n - 1) + tribonacci(n - 2) + tribonacci(n - 3);
+        }
+
+        function lucas(n) {
+            if (n === 0) {
+                return 2;
+            }
+            if (n === 1) {
+                return 1;
+            }
+    
+        return lucas(n - 1) + lucas(n - 2);
+        }
+    </script>
+</body>
+</html>
